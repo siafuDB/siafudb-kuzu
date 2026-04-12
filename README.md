@@ -1,77 +1,214 @@
-> [!NOTE]
-> Kuzu is working on something new!
-> 
-> We are archiving the KuzuDB project here: https://github.com/kuzudb/kuzu/
-> 
-> For those using Kuzu currently, prior Kuzu releases will continue to be usable in the same way without modifications to your code.
-> 
-> If you are also using extensions, moving forward you have two options:
->   1. we have a new release 0.11.3 that bundles many (but not all) of the extensions, so you can migrate to 0.11.3; or
->   2. you can follow the [instructions here](http://kuzudb.github.io/docs/extensions/#host-your-own-extension-server) to run a local extension server.
-> 
-> Further, some of our resources are moving from our website to GitHub:
->   - Docs: http://kuzudb.github.io/docs
->   - Blog: http://kuzudb.github.io/blog
-> 
-> We thank you for being early users of Kuzu and making Kuzu better over the last few years!
+<div align="center">
 
+# SiafuDB
 
-# Kuzu
-Kuzu is an embedded graph database built for query speed and scalability. Kuzu is optimized for handling complex analytical workloads 
-on very large databases and provides a set of retrieval features, such as a full text search and vector indices. Our core feature set includes:
+**The embedded graph database for device, edge, and Web3.**
 
-- Flexible Property Graph Data Model and Cypher query language
-- Embeddable, serverless integration into applications
-- Native full text search and vector index
-- Columnar disk-based storage
-- Columnar sparse row-based (CSR) adjacency list/join indices
-- Vectorized and factorized query processor
-- Novel and very fast join algorithms
-- Multi-core query parallelism
-- Serializable ACID transactions
-- Wasm (WebAssembly) bindings for fast, secure execution in the browser
+*Named after the African army ant (Dorylus) — small, embedded, unnoticed,*
+*but the ecosystem collapses without it.*
 
-Kuzu was initially developed by Kùzu Inc. It is available under a permissible license.
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/nyuchitech/siafudb.svg)](https://github.com/nyuchitech/siafudb/stargazers)
 
-## Docs and Blog
+[Website](https://siafudb.org) · [Documentation](https://siafudb.org/docs) · [Getting Started](https://siafudb.org/docs/getting-started) · [Community](https://github.com/nyuchitech/siafudb/discussions)
 
-To learn more about Kuzu, see our [Documentation](https://kuzudb.github.io/docs) and [Blog](https://kuzudb.github.io/blog) page.
+</div>
 
-## Getting Started
+---
 
-Refer to our [Getting Started](https://kuzudb.github.io/docs/get-started/) page for your first example.
+## What is SiafuDB?
 
-## Extensions
-Kuzu has an extension framework that users can dynamically load the functionality you need at runtime.
-We've developed a list of [official extensions](https://kuzudb.github.io/docs/extensions/#available-extensions) that you can use to extend Kuzu's functionality.
+SiafuDB is an embedded, high-performance property graph database purpose-built for environments where server-side databases cannot reach — mobile devices, edge runtimes, Web3 nodes, and browsers.
 
-Kuzu requires you to install the extension before loading and using it.
-Note that Kuzu no longer provides the official extension server, where you can directly install any official extensions.
+SiafuDB is forked from [KuzuDB](https://github.com/kuzudb/kuzu) v0.11.3, which was archived when Apple acquired Kùzu Inc. in October 2025. The original MIT-licensed codebase has been relicensed under **Apache 2.0** — and will never change. This is a structural guarantee enforced by the [Mukoko Foundation](https://mukoko.com/foundation), not a corporate promise.
 
-If you've upgraded to the latest version v0.11.3, Kuzu has pre-installed four commonly used extensions (`algo`, `fts`, `json`, `vector`) for you.
-You do not need to manually INSTALL these extensions.
+### Why SiafuDB?
 
-For Kuzu versions before v0.11.3, or to install extensions that haven't been pre-installed, you have to set up a local extension server.
-The instructions of setting up a local extension server can be found below.
+Every major platform — Facebook, Google, Amazon, Netflix — started with relational databases and spent billions building graph layers on top of them. The relational model was designed in 1970 for accounting ledgers. The human brain is a graph. AI systems reason over graphs. The world is connected through relationships, not rows.
 
-### Host your own extension server
+Server-side graph databases (Neo4j, JanusGraph, TigerGraph) solve this for the cloud. But the device, the edge, and the decentralised web have been left behind — still running SQLite, still thinking in tables.
 
-The extension server is based on NGINX and is hosted on [GitHub](https://ghcr.io/kuzudb/extension-repo). You can pull the Docker image and run it in your environment:
+SiafuDB brings graph-native intelligence to every environment where data lives:
 
+- **On your phone** — your AI assistant reasons over your personal knowledge graph locally, even offline
+- **At the edge** — Cloudflare Workers and Durable Objects hold cached regional subgraphs via WASM
+- **In your Web3 node** — sovereign personal data stored as a graph, cryptographically bound to your identity
+- **In your browser** — WASM-compiled graph engine running client-side with zero server dependency
+
+### Key Features
+
+**Inherited from KuzuDB v0.11.3:**
+- Embedded C++ engine — runs in-process, zero network overhead, sub-millisecond queries
+- OpenCypher query language — the same Cypher used by Neo4j and the emerging GQL standard
+- Columnar storage with SIMD-vectorised execution — 374x faster than Neo4j on path queries
+- Vector search (ANN) — semantic similarity queries for AI/ML workloads
+- Full-text search — built-in text indexing
+- Graph algorithms — PageRank, community detection, shortest path
+- Multi-language bindings — Python, Java, Node.js, Rust, C, C++
+- WebAssembly support — runs in browsers and WASM runtimes
+- Single-file database format — easy backup, replication, encryption
+
+**Built by Nyuchi (in development):**
+- **Graph Sync Protocol** — CRDT-inspired bidirectional subgraph replication between SiafuDB instances and server-side graph databases (JanusGraph)
+- **WASM edge runtime** — optimised compilation for Cloudflare Durable Objects and Workers
+- **Web3 pod integration** — embedded graph store for decentralised personal data pods
+- **Multi-model extensions** — document, key-value, and enhanced vector storage alongside graph
+- **Native mobile bindings** — Swift/iOS, Kotlin/Android, ArkTS/HarmonyOS
+
+## Quick Start
+
+### Python
 ```bash
-docker pull ghcr.io/kuzudb/extension-repo:latest
-docker run -d -p 8080:80 ghcr.io/kuzudb/extension-repo:latest
+pip install siafudb
 ```
 
-In this example, the extension server will be available at `http://localhost:8080`. You can then install extensions from your server by appending the `FROM` clause to the `INSTALL` command:
+```python
+import siafudb
 
-```cypher
-INSTALL <EXTENSION_NAME> FROM 'http://localhost:8080/';
+db = siafudb.Database('./my_graph.db')
+conn = siafudb.Connection(db)
+
+# Create schema
+conn.execute("CREATE NODE TABLE Person(name STRING, age INT64, PRIMARY KEY (name))")
+conn.execute("CREATE REL TABLE Knows(FROM Person TO Person, since INT64)")
+
+# Add data
+conn.execute("CREATE (:Person {name: 'Tatenda', age: 28})")
+conn.execute("CREATE (:Person {name: 'Rumbi', age: 25})")
+conn.execute("""
+    MATCH (a:Person {name: 'Tatenda'}), (b:Person {name: 'Rumbi'})
+    CREATE (a)-[:Knows {since: 2020}]->(b)
+""")
+
+# Query
+result = conn.execute("MATCH (a:Person)-[:Knows]->(b:Person) RETURN a.name, b.name")
+while result.has_next():
+    print(result.get_next())
 ```
 
-## Build from Source
+### Node.js
+```bash
+npm install siafudb
+```
 
-You can build from source using the instructions provided in the [developer guide](https://kuzudb.github.io/docs/developer-guide).
+### Rust
+```bash
+cargo add siafudb
+```
 
-## License
-Kuzu is licensed under the [MIT License](LICENSE).
+### Java
+```xml
+<dependency>
+    <groupId>com.siafudb</groupId>
+    <artifactId>siafudb</artifactId>
+</dependency>
+```
+
+## Architecture
+
+SiafuDB is designed as one half of a two-engine graph fabric:
+
+| Environment | Engine | Query Language | Role |
+|-------------|--------|---------------|------|
+| Server (cloud) | JanusGraph on ScyllaDB/Cassandra | Gremlin + Cypher | Platform knowledge graph (billions of nodes) |
+| Device (mobile) | **SiafuDB** (native) | Cypher | Personal subgraph, offline AI reasoning |
+| Edge (CDN) | **SiafuDB** (WASM) | Cypher | Cached regional subgraphs |
+| Web3 (pod) | **SiafuDB** (embedded) | Cypher | Sovereign personal data graph |
+| Browser (web) | **SiafuDB** (WASM) | Cypher | Client-side graph cache |
+
+The **Graph Sync Protocol** connects SiafuDB instances to the server-side JanusGraph, enabling bidirectional subgraph replication. Write on your phone, sync to the cloud. Update on the platform, sync to your device. One graph, expressed everywhere.
+
+## Building from Source
+
+### Prerequisites
+- CMake 3.15+
+- C++20 compiler (GCC 11+, Clang 14+, MSVC 2022+)
+- Python 3.9+ (for Python bindings)
+
+### Build
+```bash
+git clone https://github.com/nyuchitech/siafudb.git
+cd siafudb
+make release
+```
+
+### Run Tests
+```bash
+make test
+```
+
+For detailed build instructions, see the [Developer Guide](https://siafudb.org/docs/developer-guide).
+
+## Roadmap
+
+### Phase 1 — Foundation (Current)
+- [x] Fork KuzuDB v0.11.3 under Apache 2.0
+- [ ] Rebrand codebase (package names, imports, documentation)
+- [ ] Publish initial SiafuDB releases (Python, Node.js, Rust, Java)
+- [ ] Set up CI/CD pipeline
+- [ ] Launch siafudb.org documentation site
+
+### Phase 2 — Graph Sync Protocol
+- [ ] Design graph change log format (vertex/edge CRUD events)
+- [ ] Implement local change log capture
+- [ ] Implement bidirectional sync with JanusGraph
+- [ ] CRDT-based conflict resolution for concurrent edits
+- [ ] Integration with CouchDB replication protocol
+
+### Phase 3 — Edge & WASM
+- [ ] Optimised WASM compilation for Cloudflare Workers/DOs
+- [ ] Geographic subgraph caching in Durable Objects
+- [ ] User subgraph caching in Durable Objects
+- [ ] Browser-based graph engine improvements
+
+### Phase 4 — Web3 & Pod
+- [ ] Nyuchi Honeycomb node integration
+- [ ] Cryptographic binding to identity tokens
+- [ ] Pod replication across Honeycomb nodes
+- [ ] Heritage graph transformation (PII stripping on ancestral transition)
+
+### Phase 5 — Multi-Model Extensions
+- [ ] Document storage (JSON/JSONB as vertex properties)
+- [ ] Key-value operations
+- [ ] Enhanced vector search (multiple dimensions, configurable metrics)
+- [ ] Time-series support
+
+### Phase 6 — Native Platform Bindings
+- [ ] Swift/SwiftUI binding (iOS) via C interop
+- [ ] Kotlin/JVM binding (Android) improvements
+- [ ] ArkTS/ArkUI binding (HarmonyOS) via N-API
+- [ ] React Native bridge
+
+## Contributing
+
+We welcome contributions to SiafuDB. Whether it's bug fixes, performance improvements, documentation, or new features — every contribution strengthens the colony.
+
+Please read our [Contributing Guide](CONTRIBUTING.md) before submitting a pull request. By contributing to SiafuDB, you agree that your contributions will be licensed under the Apache 2.0 License.
+
+### Code of Conduct
+
+SiafuDB is built on the Ubuntu philosophy — *I am because we are*. We are committed to providing a welcoming and inclusive environment for everyone. Please read our [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Licence
+
+SiafuDB is licensed under the [Apache License, Version 2.0](LICENSE).
+
+The original KuzuDB source code is licensed under the [MIT License](THIRD_PARTY_NOTICES). The MIT copyright notice is preserved as required.
+
+**The Apache 2.0 licence will never change.** SiafuDB is governed by the [Mukoko Foundation](https://mukoko.com/foundation) (Mauritius, Foundations Act 2012) — a legal entity with no shareholders that exists for the community. The Foundation's charter structurally prevents relicensing. This is not a promise. It is a legal guarantee.
+
+## About
+
+SiafuDB is maintained by [Nyuchi Africa](https://nyuchi.com) and governed by the [Mukoko Foundation](https://mukoko.com/foundation).
+
+Nyuchi Africa is building [Mukoko](https://mukoko.com) — Africa's super app, targeting one billion users across 54 African countries. SiafuDB is the embedded graph engine that powers every device, every edge node, and every sovereign data pod in the Mukoko ecosystem. Built in Africa. Shared with the world.
+
+---
+
+<div align="center">
+
+*The army ant carries the graph.*
+
+**[Website](https://siafudb.org)** · **[Documentation](https://siafudb.org/docs)** · **[GitHub](https://github.com/nyuchitech/siafudb)** · **[Community](https://github.com/nyuchitech/siafudb/discussions)**
+
+</div>
