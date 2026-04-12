@@ -42,7 +42,7 @@ This Code of Conduct applies within all project spaces and also applies when an 
 
 Instances of abusive, harassing, or otherwise unacceptable behaviour may be reported to the project maintainers at:
 
-**conduct@siafudb.org**
+**conduct@nyuchi.com**
 
 All complaints will be reviewed and investigated promptly and fairly. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Reporters will receive an acknowledgement within 48 hours and a resolution within 14 days.
 
