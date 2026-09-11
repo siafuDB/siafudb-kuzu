@@ -1,0 +1,37 @@
+// markdownlint-cli2 options for siafudb-kuzu.
+//
+// The RULES come from .markdownlint.jsonc, which is the org's canonical
+// file and is byte-identical to nyuchi/.github. This file adds only
+// `ignores`, and only for content this repository does not author.
+//
+// siafudb-kuzu is a fork of KuzuDB v0.11.3. third_party/ is vendored
+// upstream source - brotli, and friends - carrying its own CHANGELOGs and
+// READMEs in their own projects' house styles. Restyling them to ours
+// would be rewriting someone else's project and would conflict with every
+// future upstream merge, forever.
+//
+// tools/rust_api/kuzu-src is a symlink to the repository root, which the
+// Rust crate needs in order to vendor the C++ sources. A `**` glob follows
+// it and re-lints the whole tree through ever-longer paths - 17,325
+// reported issues against 43 real files, the same 525 findings counted
+// over and over. Excluding the symlink is what makes the numbers honest.
+{
+  "config": {
+    "extends": ".markdownlint.jsonc",
+  },
+  // Vendored upstream content only. Everything this repository authors is
+  // still linted - the root README, CONTRIBUTING, CLA and CODE_OF_CONDUCT
+  // included.
+  "ignores": [
+    // Vendored upstream source, in its own projects' house styles.
+    "third_party/**",
+    // Symlink to the repository root that the Rust crate needs in order to
+    // vendor the C++ sources; a ** glob follows it and walks the tree again.
+    "tools/rust_api/kuzu-src/**",
+    // Upstream dataset descriptions shipped with the test corpora - SNAP,
+    // LDBC, LSQB - and the Iceberg fixture READMEs beside them.
+    "dataset/**",
+    "extension/*/test/**",
+    "node_modules/**",
+  ],
+}

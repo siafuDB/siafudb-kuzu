@@ -6,7 +6,6 @@ on:
     inputs:
       isNightly:
         type: boolean
-        required: true
         default: false
 
 jobs:

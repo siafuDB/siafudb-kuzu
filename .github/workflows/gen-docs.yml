@@ -38,7 +38,7 @@ jobs:
 
       - name: Install Python packages
         run: |
-          pip install *.whl
+          pip install ./*.whl
           pip install pdoc
           pip install torch~=2.0.0 --extra-index-url https://download.pytorch.org/whl/cpu
           pip install -r tools/python_api/requirements_dev.txt -f https://data.pyg.org/whl/torch-2.0.0+cpu.html
@@ -78,7 +78,7 @@ jobs:
         with:
           name: kuzu-nodejs-docs
           path: ./docs
-  
+
   generate-wasm-docs:
     runs-on: macos-latest
     steps:
@@ -145,7 +145,7 @@ jobs:
         with:
           name: kuzu-cpp-docs
           path: ./scripts/generate-cpp-docs/cpp/docs/html
-      
+
       - name: Upload C docs
         uses: actions/upload-artifact@v4
         with:
@@ -167,7 +167,7 @@ jobs:
           repository: kuzudb/api-docs
           token: ${{ secrets.DOC_PUSH_TOKEN }}
           path: api-docs
-        
+
       - name: Remove old documentations
         run: |
           rm -rf api-docs/python
@@ -182,7 +182,7 @@ jobs:
         with:
           name: kuzu-python-docs
           path: api-docs/python
-      
+
       - name: Download Node.js docs
         uses: actions/download-artifact@v4
         with:
@@ -194,7 +194,7 @@ jobs:
         with:
           name: kuzu-wasm-docs
           path: api-docs/wasm
-        
+
       - name: Download Java docs
         uses: actions/download-artifact@v4
         with:
@@ -206,13 +206,13 @@ jobs:
         with:
           name: kuzu-cpp-docs
           path: api-docs/cpp
-        
+
       - name: Download C docs
         uses: actions/download-artifact@v4
         with:
           name: kuzu-c-docs
           path: api-docs/c
-        
+
       - name: Push changes
         working-directory: api-docs
         run: |
@@ -222,7 +222,7 @@ jobs:
           git add .
           git commit -m "Update API documentations"
           git push -u origin "api-documentation-update-${{ github.sha }}"
-      
+
       - name: Create pull request
         working-directory: api-docs
         run: |

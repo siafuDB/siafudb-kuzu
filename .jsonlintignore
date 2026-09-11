@@ -1,0 +1,22 @@
+# Vendored upstream test corpus (this repo is a fork of KuzuDB).
+#
+# These are not malformed JSON documents that someone should fix - they are
+# fixtures whose whole purpose is to be read by something other than a strict
+# JSON parser, and for several of them being invalid as a single JSON document
+# IS the thing under test. Editing them would break the tests and be reverted
+# by the next upstream merge.
+#
+# Delta Lake transaction logs are newline-delimited JSON BY SPECIFICATION:
+extension/delta/test/delta_tables/
+extension/unity_catalog/test/setup/tables/
+# Iceberg metadata fixtures that are gzipped, despite the .json extension:
+**/*.gz.metadata.json
+# Datasets that exist to exercise the JSON/NDJSON readers, including one
+# literally named newline-delimited.json:
+dataset/json-misc/
+# Fixtures that are deliberately malformed, to test the reader's ERROR paths.
+# The directory is named json-error; invalidity is the point of every file in
+# it, so a JSON validator flagging them is the validator missing the joke:
+dataset/json-error/
+dataset/doc-examples-json/
+dataset/tinysnb_json/

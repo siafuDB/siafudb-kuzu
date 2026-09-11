@@ -35,20 +35,20 @@ jobs:
       - name: Set env for scheduled run
         if: ${{ github.event_name == 'schedule' }}
         run: |
-            echo "TIMEOUT=600000" >> $GITHUB_ENV
-            echo "SCALE_FACTOR=100" >> $GITHUB_ENV
+            echo "TIMEOUT=600000" >> "$GITHUB_ENV"
+            echo "SCALE_FACTOR=100" >> "$GITHUB_ENV"
 
       - name: Set env for workflow dispatch
         if: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
-            echo "TIMEOUT=${{ github.event.inputs.timeout }}" >> $GITHUB_ENV
-            echo "SCALE_FACTOR=${{ github.event.inputs.scale_factor }}" >> $GITHUB_ENV
+            echo "TIMEOUT=${{ github.event.inputs.timeout }}" >> "$GITHUB_ENV"
+            echo "SCALE_FACTOR=${{ github.event.inputs.scale_factor }}" >> "$GITHUB_ENV"
 
       - uses: actions/checkout@v4
 
       - name: Build
         run: |
-          pip install -r tools/python_api/requirements_dev.txt 
+          pip install -r tools/python_api/requirements_dev.txt
           make python
 
       - name: Benchmark
@@ -59,7 +59,7 @@ jobs:
         with:
           name: lsqb-benchmark-result
           path: /tmp/benchmark_result/results.csv
-      
+
       - name: Upload log
         uses: actions/upload-artifact@v4
         with:
@@ -67,4 +67,4 @@ jobs:
           path: lsqb.log
 
       - name: Report result to server
-        run:  python3 benchmark/lsqb/results_reporter.py
+        run: python3 benchmark/lsqb/results_reporter.py

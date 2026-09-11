@@ -1,0 +1,18 @@
+# actionlint configuration.
+#
+# actionlint validates `runs-on:` against GitHub's hosted-runner labels and
+# flags anything it does not recognise. These five are self-hosted runners
+# for the KuzuDB build and benchmark fleet, so they are legitimate and must
+# be declared here rather than silenced - declaring them keeps the check
+# working for genuine typos in a runner label.
+self-hosted-runner:
+  labels:
+    - kuzu-self-hosted-benchmarking
+    - kuzu-self-hosted-benchmarking-xl
+    - kuzu-self-hosted-linux-building-aarch64
+    - kuzu-self-hosted-linux-building-x86_64
+    - kuzu-self-hosted-testing
+    - ac8
+    - self-hosted-mac-arm64
+    - self-hosted-mac-x64
+    - self-hosted-windows

@@ -5,7 +5,6 @@ on:
     inputs:
       isNightly:
         type: boolean
-        required: true
         default: false
 env:
   PIP_BREAK_SYSTEM_PACKAGES: 1
@@ -25,7 +24,7 @@ jobs:
 
       - name: Build Java lib for Apple Silicon
         run: |
-          arch -arm64 env JAVA_HOME=$(/usr/libexec/java_home) make java NUM_THREADS=8
+          arch -arm64 env JAVA_HOME="$(/usr/libexec/java_home)" make java NUM_THREADS=8
         env:
           MACOSX_DEPLOYMENT_TARGET: 11.0
           ARCHFLAGS: "-arch arm64"
@@ -49,7 +48,7 @@ jobs:
 
       - name: Build Java lib for Intel
         run: |
-          env JAVA_HOME=$(/usr/libexec/java_home) make java NUM_THREADS=48
+          env JAVA_HOME="$(/usr/libexec/java_home)" make java NUM_THREADS=48
         env:
           MACOSX_DEPLOYMENT_TARGET: 11.0
           ARCHFLAGS: "-arch x86_64"

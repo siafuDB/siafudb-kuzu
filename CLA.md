@@ -6,7 +6,7 @@ The purpose of this contributor agreement ("Agreement") is to clarify and docume
 
 ### How to use this Contributor Agreement
 
-If You are an employee and have created the Contribution as part of your employment, You need to have Your employer approve this Agreement. If You do not own the Copyright in the entire work of authorship, any other author of the Contribution should also sign this – in any event, please contact Us at contact@kuzudb.com
+If You are an employee and have created the Contribution as part of your employment, You need to have Your employer approve this Agreement. If You do not own the Copyright in the entire work of authorship, any other author of the Contribution should also sign this – in any event, please contact Us at <contact@kuzudb.com>
 
 ### 1\. Definitions
 
@@ -32,11 +32,11 @@ If You are an employee and have created the Contribution as part of your employm
 
 Subject to the terms and conditions of this Agreement, You hereby grant to Us a worldwide, royalty-free, Exclusive, perpetual and irrevocable (except as stated in Section 8.1) license, with the right to transfer an unlimited number of non-exclusive licenses or to grant sublicenses to third parties, under the Copyright covering the Contribution to use the Contribution by all means, including, but not limited to:
 
-* publish the Contribution,
-* modify the Contribution,
-* prepare derivative works based upon or containing the Contribution and/or to combine the Contribution with other Materials,
-* reproduce the Contribution in original or modified form,
-* distribute, to make the Contribution available to the public, display and publicly perform the Contribution in original or modified form.
+- publish the Contribution,
+- modify the Contribution,
+- prepare derivative works based upon or containing the Contribution and/or to combine the Contribution with other Materials,
+- reproduce the Contribution in original or modified form,
+- distribute, to make the Contribution available to the public, display and publicly perform the Contribution in original or modified form.
 
 #### 2.2 Moral rights
 
@@ -46,11 +46,11 @@ Moral Rights remain unaffected to the extent they are recognized and not waivabl
 
 Upon such grant of rights to Us, We immediately grant to You a worldwide, royalty-free, non-exclusive, perpetual and irrevocable license, with the right to transfer an unlimited number of non-exclusive licenses or to grant sublicenses to third parties, under the Copyright covering the Contribution to use the Contribution by all means, including, but not limited to:
 
-* publish the Contribution,
-* modify the Contribution,
-* prepare derivative works based upon or containing the Contribution and/or to combine the Contribution with other Materials,
-* reproduce the Contribution in original or modified form,
-* distribute, to make the Contribution available to the public, display and publicly perform the Contribution in original or modified form.
+- publish the Contribution,
+- modify the Contribution,
+- prepare derivative works based upon or containing the Contribution and/or to combine the Contribution with other Materials,
+- reproduce the Contribution in original or modified form,
+- distribute, to make the Contribution available to the public, display and publicly perform the Contribution in original or modified form.
 
 This license back is limited to the Contribution and does not provide any rights to the Material.
 

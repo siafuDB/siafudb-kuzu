@@ -5,8 +5,8 @@
   "main": "index.js",
   "module": "./index.mjs",
   "types": "./kuzu.d.ts",
-  "exports":{
-    ".":{
+  "exports": {
+    ".": {
       "require": "./index.js",
       "import": "./index.mjs",
       "types": "./kuzu.d.ts"

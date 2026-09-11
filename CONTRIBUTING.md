@@ -16,6 +16,7 @@ cd siafudb
 ### 2. Build from Source
 
 **Prerequisites:**
+
 - CMake 3.15+
 - C++20 compiler (GCC 11+, Clang 14+, MSVC 2022+)
 - Python 3.9+ (for Python bindings)
@@ -52,15 +53,19 @@ All tests must pass before submitting a pull request.
 
 1. **Create an issue first** for anything beyond trivial fixes. This lets the community discuss the approach before you invest time coding.
 2. **Fork the repository** and create a feature branch from `main`:
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
+
 3. **Write tests** for your changes. New features require tests. Bug fixes require a test that would have caught the bug.
 4. **Follow the code style** (see below).
 5. **Ensure all tests pass:**
+
    ```bash
    make test
    ```
+
 6. **Commit with a clear message** and sign off (see below).
 7. **Push to your fork** and submit a pull request against `main`.
 
@@ -80,6 +85,7 @@ Signed-off-by: Your Name <your.email@example.com>
 **Components:** `core`, `cypher`, `storage`, `vector`, `fts`, `algo`, `sync`, `wasm`, `python`, `nodejs`, `rust`, `java`, `swift`, `kotlin`, `arkts`, `docs`, `ci`, `build`
 
 **Examples:**
+
 ```
 core: Fix memory leak in hash index scan
 
@@ -105,11 +111,13 @@ Signed-off-by: Rumbi Chikwanha <rumbi@example.com>
 SiafuDB uses the [Developer Certificate of Origin](https://developercertificate.org/) (DCO). Every commit must include a `Signed-off-by` line certifying that you have the right to submit the code under the Apache 2.0 licence.
 
 Add it automatically with:
+
 ```bash
 git commit -s -m "your commit message"
 ```
 
 Or add it manually to your commit message:
+
 ```
 Signed-off-by: Your Name <your.email@example.com>
 ```
@@ -119,11 +127,13 @@ Signed-off-by: Your Name <your.email@example.com>
 We especially welcome contributions in these areas:
 
 ### High Priority
+
 - **Graph Sync Protocol** — CRDT-based subgraph replication between SiafuDB instances and JanusGraph. This is the most architecturally significant feature in development. Start with the [design discussion](https://github.com/nyuchitech/siafudb/discussions).
 - **WASM optimisation** — Performance improvements for Cloudflare Workers and Durable Object runtimes. The existing WASM build works but needs optimisation for constrained edge environments.
 - **Rebrand tracking** — Renaming internal `kuzu`/`kuzudb` references to `siafudb` across the codebase. See the [rebrand issue](https://github.com/nyuchitech/siafudb/issues).
 
 ### Always Welcome
+
 - **Bug fixes** — especially in the core engine, query parser, and storage layer
 - **Performance improvements** — query execution, storage I/O, memory usage
 - **Graph algorithms** — new algorithms for the `algo` extension
@@ -133,6 +143,7 @@ We especially welcome contributions in these areas:
 - **Native bindings** — Swift (iOS), Kotlin (Android), ArkTS (HarmonyOS) platform bindings
 
 ### Future Work
+
 - **Multi-model extensions** — document (JSON/JSONB), key-value, and time-series storage alongside graph
 - **Web3 pod integration** — embedded graph store for decentralised personal data pods
 - **Browser improvements** — WASM-compiled graph engine for client-side use
@@ -144,9 +155,11 @@ We especially welcome contributions in these areas:
 - Follow the existing code style in the repository
 - Use the included `.clang-format` configuration
 - Format your code before committing:
+
   ```bash
   clang-format -i your_file.cpp
   ```
+
 - Use C++20 features where they improve clarity
 - Prefer `std::unique_ptr` and `std::shared_ptr` over raw pointers
 - All public APIs must have documentation comments
@@ -181,7 +194,7 @@ Don't be discouraged by review feedback — it's how we maintain quality togethe
 
 - **[GitHub Discussions](https://github.com/nyuchitech/siafudb/discussions)** — Questions, ideas, design discussions
 - **[GitHub Issues](https://github.com/nyuchitech/siafudb/issues)** — Bug reports, feature requests, task tracking
-- **conduct@siafudb.org** — Code of Conduct concerns
+- **<conduct@siafudb.org>** — Code of Conduct concerns
 
 Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating in any community space.
 
@@ -193,6 +206,6 @@ The Apache 2.0 licence will never change. SiafuDB is governed by the Mukoko Foun
 
 ---
 
-*Every contribution strengthens the colony. Every ant matters.*
+_Every contribution strengthens the colony. Every ant matters._
 
-*Built with Ubuntu — I am because we are.*
+_Built with Ubuntu — I am because we are._
