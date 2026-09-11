@@ -48,7 +48,6 @@ on:
       isNightly:
         description: "Whether the build is a nightly build?"
         type: boolean
-        required: true
         default: false
 env:
   PIP_BREAK_SYSTEM_PACKAGES: 1
@@ -63,10 +62,11 @@ jobs:
       - name: Update nightly version
         run: |
           python3 -m pip install packaging
-          python3 update-nightly-build-version.py | grep "New Python dev version:" | awk -F'New Python dev version: ' '{print $2}' | sed 's/\.$//' > version.txt
+          python3 update-nightly-build-version.py | grep "New Python dev version:" | awk \
+            -F'New Python dev version: ' '{print $2}' | sed 's/\.$//' > version.txt
           cat version.txt
         working-directory: scripts
-      
+
       - name: Upload version
         uses: actions/upload-artifact@v4
         with:
@@ -146,7 +146,7 @@ jobs:
         with:
           name: java-lib-win-x86_64
           path: tools/java_api/src/main/resources
-        
+
       - uses: actions/download-artifact@v4
         with:
           name: java-lib-android-armv8a
@@ -166,18 +166,18 @@ jobs:
       - name: Create Maven Central bundle
         working-directory: tools/java_api
         run: |
-            ORIGINAL_PWD=$(pwd)
+            ORIGINAL_PWD="$(pwd)"
             ./gradlew publishMavenJavaToLocalRepo -i
             cd build/repo
             zip -r kuzu-java-bundle.zip com
-            mv kuzu-java-bundle.zip $ORIGINAL_PWD
-      
+            mv kuzu-java-bundle.zip "$ORIGINAL_PWD"
+
       - name: Upload Maven Central bundle
         uses: actions/upload-artifact@v4
         with:
           name: kuzu-java-multiplatform-bundle
           path: tools/java_api/kuzu-java-bundle.zip
-      
+
       - name: Deploy to Maven Central
         if: ${{ github.event.inputs.isDeploy == 'true' && github.event.inputs.isNightly != 'true' }}
         working-directory: tools/java_api
@@ -187,7 +187,7 @@ jobs:
           --header 'Authorization: Bearer ${{ secrets.MAVEN_CENTRAL_PORTAL_TOKEN }}' \
           --form bundle=@kuzu-java-bundle.zip \
           https://central.sonatype.com/api/v1/publisher/upload?publishingType=AUTOMATIC
-        
+
       - name: Publish to GitHub Packages
         if: ${{ github.event.inputs.isDeploy == 'true' || github.event_name == 'schedule' }}
         working-directory: tools/java_api
@@ -259,7 +259,7 @@ jobs:
           name: windows-nodejs-module
           path: tools/nodejs_api/prebuilt
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: "16"
           registry-url: "https://registry.npmjs.org"
@@ -292,14 +292,14 @@ jobs:
         if: ${{ github.event.inputs.isDeploy == 'true' && github.event.inputs.isNightly != 'true' }}
         run: npm publish kuzu-source.tar.gz --access public --tag latest
         working-directory: tools/nodejs_api
-  
+
   build-wasm:
     if: ${{ github.event_name == 'schedule' || github.event.inputs.skipWasm != 'true' }}
     uses: ./.github/workflows/wasm-workflow.yml
     with:
       isNightly: ${{ github.event_name == 'schedule' || github.event.inputs.isNightly == 'true' }}
     secrets: inherit
-  
+
   deploy-wasm:
     if: ${{ github.event_name == 'schedule' || github.event.inputs.skipWasm != 'true' }}
     needs: [build-wasm]
@@ -314,7 +314,7 @@ jobs:
           name: kuzu-deploy-wasm
           path: tools/wasm
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
@@ -444,7 +444,7 @@ jobs:
       - name: Deploy to PyPI
         if: ${{ github.event_name == 'schedule' || github.event.inputs.isDeploy == 'true' }}
         uses: pypa/gh-action-pypi-publish@release/v1
-        
+
   deploy-rust:
     if: ${{ github.event_name == 'schedule' || github.event.inputs.skipRust != 'true' }}
     runs-on: kuzu-self-hosted-testing

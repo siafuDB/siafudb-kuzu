@@ -6,7 +6,6 @@ on:
     inputs:
       isNightly:
         type: boolean
-        required: true
         default: false
 
 jobs:
@@ -23,11 +22,11 @@ jobs:
           python3 -m pip install packaging
           python3 update-nightly-build-version.py
         working-directory: scripts
-      
+
       - name: Install dependencies
         working-directory: tools/wasm
         run: npm i
-      
+
       - name: Build WebAssembly package
         working-directory: tools/wasm
         run: |

@@ -1,12 +1,12 @@
 name: Purge Extensions
 
-on: 
+on:
   workflow_dispatch:
 
 jobs:
   get-ghcr-extensions:
     uses: ./.github/workflows/get-extensions-from-ghcr.yml
-    
+
   purge-extensions:
     needs: get-ghcr-extensions
     runs-on: ubuntu-22.04
@@ -20,22 +20,22 @@ jobs:
           haskell: true
           large-packages: true
           swap-storage: true
-      
+
       - uses: actions/checkout@v4
 
       - name: Restructure directories
         run: |
           mv scripts/extension ../extension-scripts
-          rm -rf *
+          rm -rf ./*
           mv ../extension-scripts/* .
-      
+
       - uses: actions/download-artifact@v4
         with:
           name: ghcr-extensions
-      
+
       - name: Purge extensions
         run: python3 purge-beta.py
-      
+
       - name: Upload purged extensions
         uses: actions/upload-artifact@v4
         with:

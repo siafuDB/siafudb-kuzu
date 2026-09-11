@@ -6,9 +6,8 @@ on:
     inputs:
       isNightly:
         type: boolean
-        required: true
         default: false
-        
+
 jobs:
   build-windows-nodejs:
     runs-on: self-hosted-windows

@@ -6,7 +6,6 @@ on:
     inputs:
       isNightly:
         type: boolean
-        required: true
         default: false
 
 jobs:
@@ -21,11 +20,11 @@ jobs:
           /opt/python/cp310-cp310/bin/python -m pip install packaging
           /opt/python/cp310-cp310/bin/python update-nightly-build-version.py
         working-directory: scripts
-      
+
       - name: Create Node.js source distribution
         working-directory: tools/nodejs_api
         run: |
-          rm -rf kuzu-source.tar.gz package *.node
+          rm -rf kuzu-source.tar.gz package ./*.node
           node package
 
       - name: Extract tarball
@@ -61,7 +60,7 @@ jobs:
       - name: Create Node.js source distribution
         working-directory: tools/nodejs_api
         run: |
-          rm -rf kuzu-source.tar.gz package *.node
+          rm -rf kuzu-source.tar.gz package ./*.node
           node package
 
       - name: Extract tarball

@@ -1,0 +1,60 @@
+# Prettier ignore for nyuchi/.github.
+
+# Standard ignores
+node_modules/
+.git/
+
+# Files with structural meaning that Prettier would harm
+LICENSE
+CODEOWNERS
+CODEOWNERS.example
+.github/CODEOWNERS
+
+# YAML is handled by yamllint and actionlint, not Prettier — they have
+# stronger guarantees about GitHub Actions semantics that Prettier does
+# not understand (e.g. the `on:` truthy quirk).
+*.yml
+*.yaml
+
+# Governance documents are authored by the Founder as legal / formal
+# documents. Prettier's markdown formatter reflows numbered paragraphs
+# ("2.2 The company pursues...") after a list as loose list-item
+# continuations, which corrupts the document's structure. Hand-format
+# these files.
+profile/governance/
+
+# Lockfiles, generated output
+*-lock.json
+*-lock.yaml
+package-lock.json
+pnpm-lock.yaml
+
+# ---------------------------------------------------------------------
+# REPO-SPECIFIC ADDITION, everything above this line is the canonical
+# nyuchi/.github .prettierignore verbatim.
+#
+# siafudb-kuzu is a fork of KuzuDB v0.11.3 and carries a large vendored
+# upstream corpus that this repository does not author:
+#
+#  - third_party/ is vendored source (brotli and friends), each carrying
+#    its own project's house style. Restyling it would be rewriting
+#    someone else's project and would conflict with every future
+#    upstream merge.
+#  - The dataset/ and extension/ fixture trees are NOT single JSON
+#    documents. Delta Lake _delta_log/*.json are newline-delimited BY
+#    SPECIFICATION, the Iceberg .gz.metadata.json files are gzipped
+#    despite the extension, and dataset/json-error/ is a directory of
+#    deliberately malformed inputs whose invalidity is the thing under
+#    test. Prettier cannot parse them and should not try.
+#  - tools/rust_api/kuzu-src is a symlink to the repository root, which
+#    the Rust crate needs in order to vendor the C++ sources. A ** glob
+#    follows it and walks the whole tree again through ever-longer paths.
+# ---------------------------------------------------------------------
+third_party/
+tools/rust_api/kuzu-src/
+# The whole test corpus: dataset descriptions from SNAP, LDBC and LSQB, and
+# the extension fixture trees. Same rationale as .markdownlint-cli2.jsonc and
+# .jsonlintignore - these three files exclude exactly the same content, so
+# there is one answer to "is this ours?" rather than three.
+dataset/
+extension/*/test/

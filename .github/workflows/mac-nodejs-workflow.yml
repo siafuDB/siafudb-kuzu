@@ -6,7 +6,6 @@ on:
     inputs:
       isNightly:
         type: boolean
-        required: true
         default: false
 env:
   PIP_BREAK_SYSTEM_PACKAGES: 1
@@ -27,7 +26,7 @@ jobs:
       - name: Create Node.js source distribution
         working-directory: tools/nodejs_api
         run: |
-          rm -rf kuzu-source.tar.gz package *.node
+          rm -rf kuzu-source.tar.gz package ./*.node
           node package
 
       - name: Extract tarball
@@ -69,7 +68,7 @@ jobs:
       - name: Create Node.js source distribution
         working-directory: tools/nodejs_api
         run: |
-          rm -rf kuzu-source.tar.gz package *.node
+          rm -rf kuzu-source.tar.gz package ./*.node
           node package
 
       - name: Extract tarball
