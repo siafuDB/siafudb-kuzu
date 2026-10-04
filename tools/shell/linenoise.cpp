@@ -600,7 +600,9 @@ int linenoiseHistorySave(const char* filename) {
 #ifdef _WIN32
     chmod(filename, _S_IREAD | _S_IWRITE);
 #else
-    chmod(filename, S_IRUSR | S_IWUSR);
+    // Restrict permissions on the open descriptor, not the path, so the
+    // file cannot be swapped between fopen() and the permission change.
+    fchmod(fileno(fp), S_IRUSR | S_IWUSR);
 #endif
     for (j = 0; j < history_len; j++)
         fprintf(fp, "%s\n", history[j]);
@@ -2361,8 +2363,8 @@ static void refreshMultiLine(struct linenoiseState* l) {
     /* First step: clear all the lines used before. To do so start by
      * going to the last row. */
     AppendBuffer append_buffer;
-    if (old_rows - l->oldpos > 0) {
-        lndebug("go down %d", old_rows - l->oldpos);
+    if (old_rows - int(l->oldpos) > 0) {
+        lndebug("go down %d", old_rows - int(l->oldpos));
         snprintf(seq, 64, "\x1b[%dB", old_rows - int(l->oldpos));
         append_buffer.abAppend(seq);
     }
@@ -2416,9 +2418,9 @@ static void refreshMultiLine(struct linenoiseState* l) {
 
     /* Go up till we reach the expected positon. */
     // printf("rows - new_cursor_row %d\n", rows - new_cursor_row);
-    if (rows - new_cursor_row > 0) {
-        lndebug("go-up %d", rows - new_cursor_row);
-        snprintf(seq, 64, "\x1b[%ldA", rows - new_cursor_row);
+    if (int(rows) - new_cursor_row > 0) {
+        lndebug("go-up %d", int(rows) - new_cursor_row);
+        snprintf(seq, 64, "\x1b[%dA", int(rows) - new_cursor_row);
         append_buffer.abAppend(seq);
     }
 
@@ -2588,8 +2590,8 @@ static void refreshSearchMultiLine(struct linenoiseState* l, const char* searchP
         if (multi_old_rows < old_rows) {
             multi_old_rows = old_rows;
         }
-        if (multi_old_rows - l->oldpos > 0) {
-            lndebug("go down %d", multi_old_rows - l->oldpos);
+        if (multi_old_rows - int(l->oldpos) > 0) {
+            lndebug("go down %d", multi_old_rows - int(l->oldpos));
             snprintf(seq, 64, "\x1b[%dB", multi_old_rows - int(l->oldpos));
             append_buffer.abAppend(seq);
         }

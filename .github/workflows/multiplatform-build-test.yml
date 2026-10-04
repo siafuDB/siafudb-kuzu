@@ -421,7 +421,7 @@ jobs:
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-update-default-toolchain
           echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
-          "$HOME"/.cargo/bin/rustup toolchain install 1.81
+          "$HOME"/.cargo/bin/rustup toolchain install 1.88
 
       - name: Rust share build
         continue-on-error: true
@@ -585,7 +585,7 @@ jobs:
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-update-default-toolchain
           echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
-          "$HOME"/.cargo/bin/rustup toolchain install 1.81
+          "$HOME"/.cargo/bin/rustup toolchain install 1.88
 
       - name: Rust share build
         continue-on-error: true
