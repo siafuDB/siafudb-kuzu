@@ -41,13 +41,16 @@
   "license": "MIT",
   "devDependencies": {
     "chai": "^4.4.1",
-    "esbuild": "0.24.2",
+    "esbuild": "0.25.12",
     "mocha": "^10.4.0",
-    "tmp": "^0.2.3"
+    "tmp": "^0.2.7"
   },
   "dependencies": {
     "threads": "^1.7.0",
     "tiny-worker": "^2.3.0",
-    "uuid": "^11.0.3"
+    "uuid": "^11.1.1"
+  },
+  "overrides": {
+    "serialize-javascript": "^7.0.5"
   }
 }

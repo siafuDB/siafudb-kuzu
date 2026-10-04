@@ -3,11 +3,11 @@ networkx~=3.0
 numpy~=2.0
 pandas~=2.2
 polars~=1.30
-pyarrow~=20.0
+pyarrow~=23.0,>=23.0.1
 pybind11~=2.13
 pytest
 pytest-asyncio~=1.0
-setuptools~=80.9
+setuptools~=83.0
 
 # required for lint/formatting
 ruff==0.11.12

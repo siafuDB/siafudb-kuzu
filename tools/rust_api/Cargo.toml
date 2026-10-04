@@ -9,7 +9,7 @@ repository = "https://github.com/kuzudb/kuzu"
 license = "MIT"
 categories = ["database"]
 
-rust-version = "1.81"
+rust-version = "1.88"
 edition = "2021"
 
 # Only include files required to build to keep the crate size small
