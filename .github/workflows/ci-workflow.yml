@@ -3,10 +3,12 @@ name: CI Workflow
 on:
   pull_request:
     branches:
-      - master
+      - main
+      - staging
   push:
     branches:
-      - master
+      - main
+      - staging
   workflow_dispatch:
     inputs:
       auto_checkpoint:
@@ -57,7 +59,7 @@ env:
   PIP_BREAK_SYSTEM_PACKAGES: 1
 
 # Only allow one run in this group to run at a time, and cancel any runs in progress in this group.
-# We use the workflow name and then add the pull request number, or (if it's a push to master), we use the name of the branch.
+# We use the workflow name and then add the pull request number, or (if it's a push to main), we use the name of the branch.
 # See github's docs[1] and a relevant stack overflow answer[2]
 #   [1]: https://docs.github.com/en/actions/using-jobs/using-concurrency
 #   [2]: https://stackoverflow.com/questions/66335225/how-to-cancel-previous-runs-in-the-pr-when-you-push-new-commitsupdate-the-curre
@@ -919,13 +921,13 @@ jobs:
         working-directory: tools/rust_api
         run: cargo fmt --all
 
-      - name: Fail if any change is detected on the master branch
-        if: github.ref == 'refs/heads/master'
+      - name: Fail if any change is detected on the main branch
+        if: github.ref == 'refs/heads/main'
         run: git diff --exit-code
 
-      - name: Commit changes on non-master branches
+      - name: Commit changes on non-main branches
         uses: EndBug/add-and-commit@v9
-        if: github.ref != 'refs/heads/master'
+        if: github.ref != 'refs/heads/main'
         with:
           author_name: "CI Bot"
           message: "ci: auto code format"
