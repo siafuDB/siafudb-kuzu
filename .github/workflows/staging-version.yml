@@ -18,8 +18,6 @@ permissions:
 
 jobs:
   version:
-    # A manual run started from main (the default in the Run workflow form)
-    # would tag main's HEAD as a staging beta. Only staging is versioned here.
     if: github.ref == 'refs/heads/staging'
     uses: nyuchi/.github/.github/workflows/reusable-staging-release.yml@924e5b4d0983d31379aedbec02b990793f29c792 # main, 2026-10-04
     with:
