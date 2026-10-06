@@ -921,13 +921,15 @@ jobs:
         working-directory: tools/rust_api
         run: cargo fmt --all
 
-      - name: Fail if any change is detected on the main branch
-        if: github.ref == 'refs/heads/main'
+      # main and staging only change through reviewed pull requests: fail on
+      # format drift there instead of pushing an unreviewed bot commit.
+      - name: Fail if any change is detected on main or staging
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'
         run: git diff --exit-code
 
-      - name: Commit changes on non-main branches
+      - name: Commit changes on other branches
         uses: EndBug/add-and-commit@v9
-        if: github.ref != 'refs/heads/main'
+        if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/staging'
         with:
           author_name: "CI Bot"
           message: "ci: auto code format"
