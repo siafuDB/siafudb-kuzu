@@ -1,0 +1,25 @@
+# Versioning policy (nyuchi/.github#80): every merge into `staging` is
+# released as the next PATCH, tagged on the merged commit.
+name: Staging version
+
+on:
+  push:
+    branches: [staging]
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Override the bump (major is only ever manual).
+        type: choice
+        options: [patch, minor, major]
+        default: patch
+
+permissions:
+  contents: read
+
+jobs:
+  version:
+    uses: nyuchi/.github/.github/workflows/reusable-staging-release.yml@c2be05a22aeb6a98a80a9301f6b3e33bb88b20b0  # v0.2.0
+    with:
+      bump: ${{ inputs.bump || '' }}
+    permissions:
+      contents: write
